@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>University MongoDB</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container">
+        <h1>University MongoDB</h1>
+        <p>Лабораторная работа №2</p>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <div>
+            <span class="badge">MongoDB • NoSQL</span>
+
+            <h2>
+                Моделирование данных
+                <span>университета</span>
+            </h2>
+
+            <p>
+                Embedded Documents, массивы и References
+            </p>
+        </div>
+    </section>
+
+
+    <section class="statistics">
+
+        <div class="stat-card">
+            <div class="icon">👨‍🎓</div>
+            <div>
+                <h3 id="studentsCount">10</h3>
+                <p>Студентов</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon">📚</div>
+            <div>
+                <h3 id="coursesCount">5</h3>
+                <p>Курсов</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon">🗄️</div>
+            <div>
+                <h3>2</h3>
+                <p>Коллекции</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon">🔗</div>
+            <div>
+                <h3>N:M</h3>
+                <p>Связь</p>
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="content">
+
+        <div class="section-title">
+            <div>
+                <h2>Студенты</h2>
+                <p>Embedded Documents и массивы</p>
+            </div>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Поиск студента..."
+            >
+        </div>
+
+
+        <div id="studentsContainer" class="students-grid">
+
+            <article class="student-card">
+
+                <div class="student-header">
+                    <div class="avatar">A</div>
+
+                    <div>
+                        <h3>Aibek</h3>
+                        <p>ID: 1001</p>
+                    </div>
+
+                    <span class="gpa">GPA 3.5</span>
+                </div>
+
+                <div class="student-info">
+
+                    <div>
+                        <span>Возраст</span>
+                        <strong>19 лет</strong>
+                    </div>
+
+                    <div>
+                        <span>Группа</span>
+                        <strong>IS-24-1</strong>
+                    </div>
+
+                    <div>
+                        <span>Город</span>
+                        <strong>Almaty</strong>
+                    </div>
+
+                </div>
+
+                <div class="skills">
+                    <span class="label">Навыки</span>
+
+                    <div class="tags">
+                        <span>Python</span>
+                        <span>Java</span>
+                        <span>MongoDB</span>
+                        <span>Docker</span>
+                    </div>
+                </div>
+
+            </article>
+
+
+            <article class="student-card">
+
+                <div class="student-header">
+                    <div class="avatar green">A</div>
+
+                    <div>
+                        <h3>Aigerim</h3>
+                        <p>ID: 1002</p>
+                    </div>
+
+                    <span class="gpa">GPA 3.8</span>
+                </div>
+
+                <div class="student-info">
+
+                    <div>
+                        <span>Возраст</span>
+                        <strong>20 лет</strong>
+                    </div>
+
+                    <div>
+                        <span>Группа</span>
+                        <strong>IS-24-1</strong>
+                    </div>
+
+                    <div>
+                        <span>Город</span>
+                        <strong>Almaty</strong>
+                    </div>
+
+                </div>
+
+                <div class="skills">
+                    <span class="label">Навыки</span>
+
+                    <div class="tags">
+                        <span>Python</span>
+                        <span>SQL</span>
+                        <span>MongoDB</span>
+                    </div>
+                </div>
+
+            </article>
+
+
+            <article class="student-card">
+
+                <div class="student-header">
+                    <div class="avatar purple">D</div>
+
+                    <div>
+                        <h3>Dias</h3>
+                        <p>ID: 1003</p>
+                    </div>
+
+                    <span class="gpa">GPA 3.2</span>
+                </div>
+
+                <div class="student-info">
+
+                    <div>
+                        <span>Возраст</span>
+                        <strong>19 лет</strong>
+                    </div>
+
+                    <div>
+                        <span>Группа</span>
+                        <strong>IS-24-1</strong>
+                    </div>
+
+                    <div>
+                        <span>Город</span>
+                        <strong>Astana</strong>
+                    </div>
+
+                </div>
+
+                <div class="skills">
+                    <span class="label">Навыки</span>
+
+                    <div class="tags">
+                        <span>Java</span>
+                        <span>C++</span>
+                        <span>Git</span>
+                    </div>
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <section class="database-section">
+
+        <div class="section-title">
+            <div>
+                <h2>Курсы</h2>
+                <p>References — связь через идентификаторы</p>
+            </div>
+        </div>
+
+
+        <div class="courses">
+
+            <div class="course-card">
+                <span class="course-id">501</span>
+                <h3>NoSQL</h3>
+                <p>Преподаватель: Kanatov A.</p>
+
+                <div class="course-bottom">
+                    <span>5 кредитов</span>
+                    <span>3 семестр</span>
+                </div>
+            </div>
+
+
+            <div class="course-card">
+                <span class="course-id">502</span>
+                <h3>Algorithms</h3>
+                <p>Преподаватель: Saparov B.</p>
+
+                <div class="course-bottom">
+                    <span>5 кредитов</span>
+                    <span>3 семестр</span>
+                </div>
+            </div>
+
+
+            <div class="course-card">
+                <span class="course-id">503</span>
+                <h3>Programming</h3>
+                <p>Преподаватель: Akhmetova D.</p>
+
+                <div class="course-bottom">
+                    <span>6 кредитов</span>
+                    <span>2 семестр</span>
+                </div>
+            </div>
+
+
+            <div class="course-card">
+                <span class="course-id">504</span>
+                <h3>Database Systems</h3>
+                <p>Преподаватель: Nurlanov E.</p>
+
+                <div class="course-bottom">
+                    <span>5 кредитов</span>
+                    <span>3 семестр</span>
+                </div>
+            </div>
+
+
+            <div class="course-card">
+                <span class="course-id">505</span>
+                <h3>Computer Networks</h3>
+                <p>Преподаватель: Bekov M.</p>
+
+                <div class="course-bottom">
+                    <span>4 кредита</span>
+                    <span>4 семестр</span>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="model-section">
+
+        <div class="model-card embedding">
+
+            <div class="model-icon">📦</div>
+
+            <h2>Embedding</h2>
+
+            <p>
+                Связанные данные хранятся внутри документа студента.
+            </p>
+
+            <code>
+                contact: { city, email }
+            </code>
+
+            <ul>
+                <li>Быстрое чтение</li>
+                <li>Нет дополнительного запроса</li>
+                <li>Удобно для контактных данных</li>
+            </ul>
+
+        </div>
+
+
+        <div class="model-card referencing">
+
+            <div class="model-icon">🔗</div>
+
+            <h2>Referencing</h2>
+
+            <p>
+                Данные курса хранятся отдельно и связываются по ID.
+            </p>
+
+            <code>
+                courseIds: [501, 502, 503]
+            </code>
+
+            <ul>
+                <li>Меньше дублирования</li>
+                <li>Удобно для N:M</li>
+                <li>Используется $lookup</li>
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <section class="queries">
+
+        <h2>MongoDB запросы</h2>
+
+        <div class="query">
+
+            <h3>Dot notation</h3>
+
+            <pre>db.students.find({
+    "contact.city": "Almaty"
+})</pre>
+
+        </div>
+
+
+        <div class="query">
+
+            <h3>$all</h3>
+
+            <pre>db.students.find({
+    skills: {
+        $all: ["Java", "MongoDB"]
+    }
+})</pre>
+
+        </div>
+
+
+        <div class="query">
+
+            <h3>$lookup</h3>
+
+            <pre>db.students.aggregate([
+    {
+        $lookup: {
+            from: "courses",
+            localField: "courseIds",
+            foreignField: "_id",
+            as: "courses"
+        }
+    }
+])</pre>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container">
+        <p>Лабораторная работа №2 • NoSQL / MongoDB</p>
+        <p>University Database Project</p>
+    </div>
+</footer>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>

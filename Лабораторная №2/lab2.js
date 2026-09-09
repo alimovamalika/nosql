@@ -1,11 +1,19 @@
+// ==========================================
 // Лабораторная работа №2
-// MongoDB: Embedded Documents, Arrays, References
+// Моделирование данных в MongoDB
 // Предметная область: Университет
+// ==========================================
 
 use("universityDB");
 
+// Удаляем старые коллекции,
+// чтобы код можно было запускать повторно
+db.students.drop();
+db.courses.drop();
+
+
 // ==========================================
-// 1. Создание коллекций
+// Задание 2. Создание коллекций
 // ==========================================
 
 db.createCollection("students");
@@ -13,15 +21,8 @@ db.createCollection("courses");
 
 
 // ==========================================
-// 2. Очистка коллекций при повторном запуске
-// ==========================================
-
-db.students.deleteMany({});
-db.courses.deleteMany({});
-
-
-// ==========================================
-// 3. Создание 10 студентов
+// Задание 3. Embedded Documents
+// Создание 10 студентов
 // ==========================================
 
 db.students.insertMany([
@@ -149,7 +150,7 @@ db.students.insertMany([
 
 
 // ==========================================
-// 4. Массив вложенных документов grades
+// Задание 4. Массив документов grades
 // ==========================================
 
 db.students.updateMany(
@@ -157,9 +158,18 @@ db.students.updateMany(
     {
         $set: {
             grades: [
-                { course: "NoSQL", grade: 90 },
-                { course: "Algorithms", grade: 85 },
-                { course: "Programming", grade: 95 }
+                {
+                    course: "NoSQL",
+                    grade: 90
+                },
+                {
+                    course: "Algorithms",
+                    grade: 85
+                },
+                {
+                    course: "Programming",
+                    grade: 95
+                }
             ]
         }
     }
@@ -167,45 +177,49 @@ db.students.updateMany(
 
 
 // ==========================================
-// 5. Запросы Dot Notation
+// Задание 5. Dot notation
 // ==========================================
 
-// Студенты из Алматы
+// 1. Студенты из Алматы
 db.students.find({
     "contact.city": "Almaty"
 });
 
-// Студенты из Астаны
+// 2. Студенты из Астаны
 db.students.find({
     "contact.city": "Astana"
 });
 
-// Алматы + GPA >= 3.0
+// 3. Алматы + GPA >= 3.0
 db.students.find({
     "contact.city": "Almaty",
-    gpa: { $gte: 3.0 }
+    gpa: {
+        $gte: 3.0
+    }
 });
 
 
 // ==========================================
-// 6. Работа с массивами
+// Задание 6. Работа с массивами
 // ==========================================
 
-// Студенты, которые знают MongoDB
+// Поиск по элементу массива
 db.students.find({
     skills: "MongoDB"
 });
 
-// Студенты, которые знают Java и MongoDB
+// $all
 db.students.find({
     skills: {
         $all: ["Java", "MongoDB"]
     }
 });
 
-// Добавляем Docker студенту Aibek
+// $push
 db.students.updateOne(
-    { studentId: 1001 },
+    {
+        studentId: 1001
+    },
     {
         $push: {
             skills: "Docker"
@@ -215,7 +229,8 @@ db.students.updateOne(
 
 
 // ==========================================
-// 7. Создание курсов
+// Задание 7. Referencing
+// Создание 5 курсов
 // ==========================================
 
 db.courses.insertMany([
@@ -258,11 +273,13 @@ db.courses.insertMany([
 
 
 // ==========================================
-// 8. References
+// Связь Students -> Courses
 // ==========================================
 
 db.students.updateOne(
-    { studentId: 1001 },
+    {
+        studentId: 1001
+    },
     {
         $set: {
             courseIds: [501, 502, 503]
@@ -271,7 +288,11 @@ db.students.updateOne(
 );
 
 db.students.updateMany(
-    { studentId: { $ne: 1001 } },
+    {
+        studentId: {
+            $ne: 1001
+        }
+    },
     {
         $set: {
             courseIds: [501, 502, 504]
@@ -281,18 +302,8 @@ db.students.updateMany(
 
 
 // ==========================================
-// 9. Проверка данных
-// ==========================================
-
-print("Количество студентов:");
-print(db.students.countDocuments());
-
-print("Количество курсов:");
-print(db.courses.countDocuments());
-
-
-// ==========================================
-// 10. Получение студента с курсами
+// Задание 8. $lookup
+// Получение студентов вместе с курсами
 // ==========================================
 
 db.students.aggregate([
@@ -308,9 +319,22 @@ db.students.aggregate([
 
 
 // ==========================================
-// 11. Студент Aibek
+// Дополнительные проверки
 // ==========================================
 
-db.students.findOne({
-    studentId: 1001
-});
+print("================================");
+print("Количество студентов:");
+print(db.students.countDocuments());
+
+print("================================");
+print("Количество курсов:");
+print(db.courses.countDocuments());
+
+print("================================");
+print("Студент Aibek:");
+
+printjson(
+    db.students.findOne({
+        studentId: 1001
+    })
+);
