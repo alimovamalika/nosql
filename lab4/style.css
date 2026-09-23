@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #08080d;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: rgba(8, 8, 13, 0.95);
+    border-bottom: 1px solid #292936;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: #a855f7;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    color: #aaa;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #a855f7;
+}
+
+.hero {
+    min-height: 700px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+    padding: 100px 10%;
+    background:
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(168, 85, 247, 0.25),
+            transparent 35%
+        ),
+        #08080d;
+}
+
+.badge {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-bottom: 25px;
+    border: 1px solid #a855f7;
+    border-radius: 30px;
+    color: #c084fc;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hero h1 {
+    font-size: clamp(55px, 9vw, 110px);
+    line-height: 0.95;
+    margin-bottom: 30px;
+}
+
+.hero p {
+    max-width: 600px;
+    color: #aaa;
+    font-size: 20px;
+    margin-bottom: 35px;
+}
+
+button {
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    background: linear-gradient(
+        135deg,
+        #a855f7,
+        #ec4899
+    );
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.35);
+}
+
+.music-card {
+    width: 330px;
+    padding: 30px;
+    border-radius: 25px;
+    background: linear-gradient(
+        145deg,
+        #1d1d27,
+        #101017
+    );
+    border: 1px solid #30303c;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+}
+
+.album {
+    height: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    border-radius: 18px;
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #ec4899
+        );
+    font-size: 100px;
+}
+
+.music-card h3 {
+
+

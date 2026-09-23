@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Service — MongoDB Lab 4</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">♫ MusicLab</div>
+
+    <nav>
+        <a href="#home">Главная</a>
+        <a href="#tracks">Треки</a>
+        <a href="#aggregation">Aggregation</a>
+        <a href="#indexes">Индексы</a>
+    </nav>
+</header>
+
+<main>
+
+<section id="home" class="hero">
+    <div>
+        <span class="badge">MongoDB • Laboratory #4</span>
+
+        <h1>Music Service</h1>
+
+        <p>
+            Aggregation Pipeline, индексы и анализ
+            производительности MongoDB-запросов.
+        </p>
+
+        <button onclick="showMessage()">
+            Запустить анализ
+        </button>
+    </div>
+
+    <div class="music-card">
+        <div class="album">♫</div>
+        <h3>MongoDB Music</h3>
+        <p>Aggregation & Indexes</p>
+
+        <div class="progress">
+            <span></span>
+        </div>
+
+        <div class="player">
+            <span>◀</span>
+            <span class="play">▶</span>
+            <span>▶</span>
+        </div>
+    </div>
+</section>
+
+<section id="tracks" class="section">
+    <div class="section-title">
+        <span>01</span>
+        <h2>Music Collection</h2>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <strong>30</strong>
+            <span>Tracks</span>
+        </div>
+
+        <div class="stat-card">
+            <strong>5</strong>
+            <span>Genres</span>
+        </div>
+
+        <div class="stat-card">
+            <strong>20+</strong>
+            <span>Artists</span>
+        </div>
+
+        <div class="stat-card">
+            <strong>4.9</strong>
+            <span>Top Rating</span>
+        </div>
+    </div>
+</section>
+
+<section id="aggregation" class="section dark-section">
+
+    <div class="section-title">
+        <span>02</span>
+        <h2>Aggregation Pipeline</h2>
+    </div>
+
+    <div class="pipeline">
+
+        <div class="pipeline-step">
+            <b>$match</b>
+            <p>Фильтрация треков</p>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="pipeline-step">
+            <b>$project</b>
+            <p>Формирование результата</p>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="pipeline-step">
+            <b>$group</b>
+            <p>Группировка данных</p>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="pipeline-step">
+            <b>$sort</b>
+            <p>Сортировка</p>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="pipeline-step">
+            <b>$limit</b>
+            <p>TOP результатов</p>
+        </div>
+
+    </div>
+
+    <div class="code-box">
+        <code>
+db.tracks.aggregate([<br>
+&nbsp;&nbsp;{$match: {rating: {$gte: 4.7}}},<br>
+&nbsp;&nbsp;{$group: {_id: "$genre", count: {$sum: 1}}},<br>
+&nbsp;&nbsp;{$sort: {count: -1}},<br>
+&nbsp;&nbsp;{$limit: 5}<br>
+])
+        </code>
+    </div>
+
+</section>
+
+<section id="indexes" class="section">
+
+    <div class="section-title">
+        <span>03</span>
+        <h2>Index Performance</h2>
+    </div>
+
+    <div class="comparison">
+
+        <div class="performance-card before">
+            <h3>До индекса</h3>
+
+            <div class="plan">
+                <span>COLLSCAN</span>
+            </div>
+
+            <p>
+                MongoDB просматривает документы
+                коллекции для поиска подходящих записей.
+            </p>
+
+            <div class="metric">
+                <span>totalDocsExamined</span>
+                <strong>30</strong>
+            </div>
+
+            <div class="metric">
+                <span>totalKeysExamined</span>
+                <strong>0</strong>
+            </div>
+        </div>
+
+        <div class="vs">VS</div>
+
+        <div class="performance-card after">
+            <h3>После индекса</h3>
+
+            <div class="plan">
+                <span>IXSCAN</span>
+            </div>
+
+            <p>
+                MongoDB использует индекс для поиска
+                подходящих документов.
+            </p>
+
+            <div class="metric">
+                <span>totalDocsExamined</span>
+                <strong>10*</strong>
+            </div>
+
+            <div class="metric">
+                <span>totalKeysExamined</span>
+                <strong>10*</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <p class="note">
+        * Значения являются примером. В отчёте необходимо
+        указать реальные значения из explain("executionStats").
+    </p>
+
+</section>
+
+<section class="section conclusion">
+
+    <div class="section-title">
+        <span>04</span>
+        <h2>Вывод</h2>
+    </div>
+
+    <div class="conclusion-card">
+        <p>
+            В лабораторной работе были изучены Aggregation Pipeline,
+            операторы $match, $project, $group, $sort, $limit,
+            $unwind и $lookup.
+        </p>
+
+        <p>
+            С помощью explain("executionStats") выполнено сравнение
+            COLLSCAN и IXSCAN. Индексы позволяют уменьшить объём
+            просматриваемых данных, однако требуют дополнительного
+            места и времени на обновление индекса.
+        </p>
+
+        <p>
+            При создании составных индексов необходимо учитывать
+            структуру реальных запросов и принцип ESR:
+            Equality → Sort → Range.
+        </p>
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    <p>MongoDB Laboratory №4 • Music Service</p>
+</footer>
+
+<script>
+function showMessage() {
+    alert(
+        "Анализ подготовлен. " +
+        "Запустите lab4.js в mongosh и сравните explain('executionStats')."
+    );
+}
+</script>
+
+</body>
+</html>
