@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Redis Lab №5</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-content">
+
+        <div>
+            <div class="logo">
+                Redis Lab №5
+            </div>
+
+            <div class="subtitle">
+                Кэширование и пользовательские сессии
+            </div>
+        </div>
+
+        <div class="redis-status">
+            <span id="statusDot"></span>
+            <span id="redisStatus">
+                Проверка Redis...
+            </span>
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <section class="hero">
+
+        <div>
+
+            <span class="badge">
+                Вариант №1
+            </span>
+
+            <h1>
+                Информационная система университета
+            </h1>
+
+            <p>
+                Демонстрация Redis Cache, Sessions,
+                TTL, Hash, List, Set и String.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- COURSES -->
+
+    <section class="card">
+
+        <div class="section-title">
+
+            <div>
+                <h2>Кэш дисциплин</h2>
+
+                <p>
+                    Redis Hash + TTL 600 секунд
+                </p>
+            </div>
+
+            <button
+                class="btn primary"
+                onclick="loadCourses()"
+            >
+                Обновить
+            </button>
+
+        </div>
+
+        <div
+            id="courses"
+            class="course-grid"
+        ></div>
+
+    </section>
+
+
+    <!-- SESSION -->
+
+    <section class="card">
+
+        <div class="section-title">
+
+            <div>
+                <h2>Пользовательская сессия</h2>
+
+                <p>
+                    Hash + TTL 1800 секунд
+                </p>
+            </div>
+
+        </div>
+
+        <div class="form-grid">
+
+            <input
+                id="sessionId"
+                placeholder="ID сессии"
+                value="s001"
+            >
+
+            <input
+                id="userId"
+                placeholder="User ID"
+                value="1001"
+            >
+
+            <select id="role">
+
+                <option value="student">
+                    student
+                </option>
+
+                <option value="teacher">
+                    teacher
+                </option>
+
+                <option value="admin">
+                    admin
+                </option>
+
+            </select>
+
+            <select id="language">
+
+                <option value="ru">
+                    Русский
+                </option>
+
+                <option value="kk">
+                    Қазақша
+                </option>
+
+                <option value="en">
+                    English
+                </option>
+
+            </select>
+
+            <input
+                id="lastSection"
+                placeholder="Последний раздел"
+                value="courses"
+            >
+
+        </div>
+
+        <div class="buttons">
+
+            <button
+                class="btn primary"
+                onclick="createSession()"
+            >
+                Создать сессию
+            </button>
+
+            <button
+                class="btn secondary"
+                onclick="getSession()"
+            >
+                Получить
+            </button>
+
+            <button
+                class="btn warning"
+                onclick="changeLanguage()"
+            >
+                Изменить язык
+            </button>
+
+            <button
+                class="btn danger"
+                onclick="deleteSession()"
+            >
+                Завершить
+            </button>
+
+        </div>
+
+        <div
+            id="sessionResult"
+            class="result"
+        ></div>
+
+    </section>
+
+
+    <!-- RECENT -->
+
+    <section class="two-columns">
+
+        <div class="card">
+
+            <h2>
+                Последние дисциплины
+            </h2>
+
+            <p class="muted">
+                Redis List
+            </p>
+
+            <div class="form-inline">
+
+                <input
+                    id="recentUser"
+                    value="1001"
+                    placeholder="User ID"
+                >
+
+                <select id="recentCourse">
+
+                    <option value="CS305">
+                        CS305
+                    </option>
+
+                    <option value="DB201">
+                        DB201
+                    </option>
+
+                    <option value="WEB301">
+                        WEB301
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="buttons">
+
+                <button
+                    class="btn primary"
+                    onclick="addRecent()"
+                >
+                    Добавить
+                </button>
+
+                <button
+                    class="btn secondary"
+                    onclick="loadRecent()"
+                >
+                    Получить
+                </button>
+
+            </div>
+
+            <div
+                id="recentResult"
+                class="result"
+            ></div>
+
+        </div>
+
+
+        <!-- ONLINE -->
+
+        <div class="card">
+
+            <h2>
+                Активные пользователи
+            </h2>
+
+            <p class="muted">
+                Redis Set
+            </p>
+
+            <div class="form-inline">
+
+                <select id="onlineCourse">
+
+                    <option value="CS305">
+                        CS305
+                    </option>
+
+                    <option value="DB201">
+                        DB201
+                    </option>
+
+                    <option value="WEB301">
+                        WEB301
+                    </option>
+
+                </select>
+
+                <input
+                    id="onlineUser"
+                    value="student:1001"
+                    placeholder="Пользователь"
+                >
+
+            </div>
+
+            <div class="buttons">
+
+                <button
+                    class="btn primary"
+                    onclick="addOnline()"
+                >
+                    Добавить онлайн
+                </button>
+
+                <button
+                    class="btn secondary"
+                    onclick="loadOnline()"
+                >
+                    Получить
+                </button>
+
+            </div>
+
+            <div
+                id="onlineResult"
+                class="result"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- COUNTER -->
+
+    <section class="card">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Счётчик просмотров
+                </h2>
+
+                <p>
+                    Redis String + INCR
+                </p>
+
+            </div>
+
+            <div
+                id="viewCounter"
+                class="counter"
+            >
+                0
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <button
+                class="btn primary"
+                onclick="incrementViews()"
+            >
+                +1 просмотр
+            </button>
+
+            <button
+                class="btn secondary"
+                onclick="loadViews()"
+            >
+                Обновить
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- TTL -->
+
+    <section class="card ttl-card">
+
+        <div>
+
+            <h2>
+                Демонстрация TTL
+            </h2>
+
+            <p>
+                Создаётся временный ключ
+                <code>cache:ttl-demo</code>
+                на 20 секунд.
+            </p>
+
+        </div>
+
+        <div class="ttl-value">
+
+            <span id="ttlValue">
+                —
+            </span>
+
+            <small>
+                секунд
+            </small>
+
+        </div>
+
+        <button
+            class="btn warning"
+            onclick="startTTLDemo()"
+        >
+            Создать TTL = 20 сек.
+        </button>
+
+    </section>
+
+
+    <!-- ARCHITECTURE -->
+
+    <section class="card">
+
+        <h2>
+            Модель Redis
+        </h2>
+
+        <div class="architecture">
+
+            <div class="architecture-item">
+
+                <strong>Hash</strong>
+
+                <span>
+                    cache:course:CS305
+                </span>
+
+                <small>
+                    Карточка дисциплины
+                </small>
+
+            </div>
+
+            <div class="architecture-item">
+
+                <strong>Hash</strong>
+
+                <span>
+                    session:s001
+                </span>
+
+                <small>
+                    Пользовательская сессия
+                </small>
+
+            </div>
+
+            <div class="architecture-item">
+
+                <strong>List</strong>
+
+                <span>
+                    recent:student:1001
+                </span>
+
+                <small>
+                    Последние дисциплины
+                </small>
+
+            </div>
+
+            <div class="architecture-item">
+
+                <strong>Set</strong>
+
+                <span>
+                    course:CS305:online
+                </span>
+
+                <small>
+                    Активные пользователи
+                </small>
+
+            </div>
+
+            <div class="architecture-item">
+
+                <strong>String</strong>
+
+                <span>
+                    counter:course:CS305:views
+                </span>
+
+                <small>
+                    Счётчик просмотров
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOG -->
+
+    <section class="card">
+
+        <div class="section-title">
+
+            <h2>
+                Результат операции
+            </h2>
+
+            <button
+                class="btn small"
+                onclick="clearLog()"
+            >
+                Очистить
+            </button>
+
+        </div>
+
+        <pre id="log">Готово к работе...</pre>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        Лабораторная работа №5 · Redis ·
+        NoSQL Technologies
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

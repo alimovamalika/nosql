@@ -1,0 +1,14 @@
+{
+  "name": "redis-lab5",
+  "version": "1.0.0",
+  "description": "Лабораторная работа №5 - Redis Cache and Sessions",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "redis": "^5.8.0"
+  }
+}
